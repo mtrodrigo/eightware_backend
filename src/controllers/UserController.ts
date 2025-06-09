@@ -38,6 +38,10 @@ export class UserController {
       res.status(500).json({ message: "Erro ao cadastrar usuário: ", error });
     }
   };
+
+  static async login (req: Request, res: Response) {}
+
+  static async getProfile (req: Request, res: Response) {}
 }
 
 export const validateSignupUser = validate(createUserSchema)
