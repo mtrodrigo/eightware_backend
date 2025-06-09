@@ -53,7 +53,7 @@ MONGO_URI=mongodb://localhost:27017/
 npm run dev
 ```
 
-O servidor estará disponível em `http://localhost:3000`.
+O servidor estará disponível em `http://localhost:5000`.
 
 ### 6. Rodando os testes
 
