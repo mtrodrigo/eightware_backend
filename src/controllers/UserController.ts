@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import { User } from "../models/User";
 import { createUserToken } from "../helpers/createUserToken";
 import { createUserSchema } from "../schema/userSingup.schema";
+import { createUserLoginSchema } from "../schema/userLogin.schema";
 import { validate } from "../middlewares/validate";
 
 export class UserController {
@@ -73,3 +74,4 @@ export class UserController {
 }
 
 export const validateSignupUser = validate(createUserSchema)
+export const validadeLoginUser = validate(createUserLoginSchema)

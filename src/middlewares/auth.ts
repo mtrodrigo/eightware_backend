@@ -1,3 +1,4 @@
+import "../config/auth"; 
 import { Request, Response, NextFunction } from "express";
 import passport from "passport";
 import { UserProps } from "../models/User";
