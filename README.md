@@ -78,3 +78,9 @@ npm test -- --verbose
 - Certifique-se de que o MongoDB está rodando antes de iniciar a aplicação.
 
 ---
+
+## Criado por
+
+-Rodrigo Marques Tavares
+- **Email:** rodrigour@gmail.com
+- **WhatsApp:** (35) 98406-1841
