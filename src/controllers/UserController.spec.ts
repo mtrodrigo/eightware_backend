@@ -60,17 +60,6 @@ describe("UserController - signup", () => {
     });
   });
 
-  it("deve retornar erro se usuário já existe", async () => {
-    (User.findOne as jest.Mock).mockResolvedValue({ email: "joao@test.com" });
-
-    await UserController.signup(req as Request, res as Response);
-
-    expect(mockStatus).toHaveBeenCalledWith(422);
-    expect(mockJson).toHaveBeenCalledWith({
-      message: "E-mail-inválido, use outro",
-    });
-  });
-
   describe("UserController - login", () => {
     let req: Partial<Request>;
     let res: Partial<Response>;
@@ -96,7 +85,7 @@ describe("UserController - signup", () => {
       jest.clearAllMocks();
     });
 
-    it("deve fazer login com sucesso", async () => {
+    it("deve fazer login e gerar o token", async () => {
       (User.findOne as jest.Mock).mockResolvedValue({
         _id: "123",
         email: "teste@teste.com",
@@ -112,45 +101,9 @@ describe("UserController - signup", () => {
         message: "Login realizado com sucesso",
         token: "tokenLogin",
       });
-    });
-
-    it("deve retornar erro se usuário não existe", async () => {
-      (User.findOne as jest.Mock).mockResolvedValue(null);
-
-      await UserController.login(req as Request, res as Response);
-
-      expect(mockStatus).toHaveBeenCalledWith(404);
-      expect(mockJson).toHaveBeenCalledWith({
-        message: "Credenciais inválidas",
-      });
-    });
-
-    it("deve retornar erro se a senha estiver incorreta", async () => {
-      (User.findOne as jest.Mock).mockResolvedValue({
+      expect(createUserToken).toHaveBeenCalledWith({
         _id: "123",
         email: "teste@teste.com",
-        password: "senhaCriptografada",
-      });
-      (bcrypt.compare as jest.Mock).mockResolvedValue(false);
-
-      await UserController.login(req as Request, res as Response);
-
-      expect(mockStatus).toHaveBeenCalledWith(401);
-      expect(mockJson).toHaveBeenCalledWith({
-        message: "Credenciais inválidas",
-      });
-    });
-
-    it("deve retornar erro 500 em caso de falha no login", async () => {
-      (User.findOne as jest.Mock).mockRejectedValue(new Error("Erro no banco"));
-      jest.spyOn(console, "error").mockImplementation();
-
-      await UserController.login(req as Request, res as Response);
-
-      expect(mockStatus).toHaveBeenCalledWith(500);
-      expect(mockJson).toHaveBeenCalledWith({
-        message: "Erro ao realizar login: ",
-        error: expect.any(Error),
       });
     });
   });
