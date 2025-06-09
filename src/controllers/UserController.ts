@@ -46,13 +46,15 @@ export class UserController {
     //check user exists
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(404).json({ message: "Credenciais inválidas" });
+      res.status(404).json({ message: "Credenciais inválidas" });
+      return
     }
 
     // Verify password
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(401).json({ message: "Credenciais inválidas" });
+      res.status(401).json({ message: "Credenciais inválidas" });
+      return
     }
 
     const token = createUserToken({
@@ -60,10 +62,10 @@ export class UserController {
       email: user.email || "",
     });
 
-    return res.status(200).json({ message: "Login realizado com sucesso", token });
+    res.status(200).json({ message: "Login realizado com sucesso", token });
   } catch (error) {
     console.error("Error: ", error);
-    return res.status(500).json({ message: "Erro ao realizar login: ", error });
+    res.status(500).json({ message: "Erro ao realizar login: ", error });
   }
 }
 
