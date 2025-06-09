@@ -70,7 +70,26 @@ export class UserController {
   }
 }
 
-  static async getProfile (req: Request, res: Response) {}
+  static async getProfile (req: Request, res: Response) {
+    try {
+      const userId = (req.user as { _id?: string })?._id;
+      if (!userId) {
+         res.status(401).json({ message: "Não autorizado" });
+         return
+      }
+
+      const user = await User.findById(userId).select("-password");
+      if (!user) {
+         res.status(404).json({ message: "Usuário não encontrado" });
+         return
+      }
+
+      res.status(200).json({ user });
+    } catch (error) {
+      console.error("Error: ", error);
+      res.status(500).json({ message: "Erro ao buscar perfil do usuário", error });
+    }
+  }
 }
 
 export const validateSignupUser = validate(createUserSchema)
