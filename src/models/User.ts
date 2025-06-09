@@ -1,12 +1,12 @@
 import { Schema, model, Document } from "mongoose";
 
-interface User extends Document {
+export interface UserProps extends Document {
   name: string;
   email: string;
   password: string;
 }
 
-const UserSchema = new Schema<User>(
+const UserSchema = new Schema<UserProps>(
   {
     name: {
       type: String,
@@ -25,4 +25,4 @@ const UserSchema = new Schema<User>(
   { timestamps: true }
 );
 
-export const User = model<User>("User", UserSchema);
+export const User = model<UserProps>("User", UserSchema);
