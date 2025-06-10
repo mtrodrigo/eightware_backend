@@ -9,7 +9,8 @@ Este é o backend de autenticação de usuários do teste técnico Eightware, de
 - **MongoDB** com **Mongoose** 
 - **JWT** 
 - **Passport** e **passport-jwt** 
-- **bcryptjs** 
+- **bcryptjs**
+- **CryptoJS**
 - **dotenv** 
 - **Jest** e **Supertest** 
 - **CORS**
@@ -36,6 +37,7 @@ Crie um arquivo `.env` na raiz do projeto com o seguinte conteúdo:
 ```
 JWT_SECRET=sua_chave_secreta
 MONGO_URI=mongodb://localhost:27017/
+SECRET_KEY_CRYPTOJS=sua-chave-secreta-123
 ```
 
 ### 4. Configure o MongoDB no Compass
