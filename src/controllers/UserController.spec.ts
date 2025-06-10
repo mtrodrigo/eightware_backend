@@ -36,7 +36,7 @@ describe("UserController - signup", () => {
     jest.clearAllMocks();
   });
 
-  it("deve criar usuário com sucesso", async () => {
+  it("deve criar usuário com sucesso e gerar o token", async () => {
     (User.findOne as jest.Mock).mockResolvedValue(null);
 
     (bcrypt.hash as jest.Mock).mockResolvedValue("senhaCriptografada");
