@@ -6,6 +6,7 @@ import { createUserSchema } from "../schema/userSingup.schema";
 import { createUserLoginSchema } from "../schema/userLogin.schema";
 import { validate } from "../middlewares/validate";
 import { encryptCPF } from "../utils/encryptCpf";
+import { decryptCPF } from "../utils/decryptCpf";
 
 export class UserController {
   static async signup(req: Request, res: Response) {
@@ -99,13 +100,23 @@ export class UserController {
         return;
       }
 
+      
       const user = await User.findById(userId).select("-password");
       if (!user) {
         res.status(404).json({ message: "Usuário não encontrado" });
         return;
       }
+      //Decrypted cpf
+      const userObject = user.toObject()
+      if(userObject) {
+        try {
+          userObject.cpf = decryptCPF(userObject.cpf)
+        } catch (error) {
+          console.error("Erro ao descriptografar o CPF: ", error);
+        }
+      }
 
-      res.status(200).json({ user });
+      res.status(200).json({ user: userObject });
     } catch (error) {
       console.error("Error: ", error);
       res
