@@ -12,7 +12,8 @@ Este é o backend de autenticação de usuários do teste técnico Eightware, de
 - **bcryptjs**
 - **CryptoJS**
 - **dotenv** 
-- **Jest** e **Supertest** 
+- **Jest** e **Supertest**
+- **Postman**
 - **CORS**
 
 ## Como rodar o projeto
