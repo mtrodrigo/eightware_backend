@@ -17,3 +17,7 @@ app.use("/users", UserRoutes);
 connectDB()
 const port = 5000;
 app.listen(port, () => console.log(`Sevidor local na porta: ${port}`));
+
+app.get("/", (req, res) => {
+    res.send("API iniciada com sucesso!");
+});
