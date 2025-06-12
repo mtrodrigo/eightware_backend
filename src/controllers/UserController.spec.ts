@@ -28,6 +28,7 @@ describe("UserController - signup", () => {
         name: "Teste",
         email: "teste@teste.com",
         password: "123456",
+        confirmpassword: "123456",
         cpf: "12345678910",
         address: "Rua do Teste",
         number: "12A",
@@ -47,7 +48,10 @@ describe("UserController - signup", () => {
 
   it("deve criar usuário com sucesso e gerar o token", async () => {
     (User.findOne as jest.Mock).mockResolvedValue(null);
-    (bcrypt.hash as jest.Mock).mockResolvedValue("senhaCriptografada");
+    (User.find as jest.Mock).mockResolvedValue([]);
+    (bcrypt.hash as jest.Mock).mockImplementation(async (password: string, saltRounds: number) => {
+      return "senhaCriptografada";
+    });
     (encryptCPF as jest.Mock).mockReturnValue("cpf-criptografado-123");
 
     const mockUserInstance = {

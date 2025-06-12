@@ -31,6 +31,20 @@ export class UserController {
         return;
       }
 
+      // Check if CPF already exists
+      const users = await User.find({});
+      for (const existingUser of users) {
+        try {
+          const decryptedCpf = decryptCPF(existingUser.cpf);
+          if (decryptedCpf === cpf) {
+        res.status(422).json({ message: "CPF já cadastrado, use outro" });
+        return;
+          }
+        } catch (error) {
+          console.error("Erro ao descriptografar o CPF: ", error);
+        }
+      }
+
       //encrypt password
       const passwordEncrypted = await bcrypt.hash(password, 12);
 
